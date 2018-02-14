@@ -110,3 +110,5 @@ Next, run the script
 
 This will run the web app in the foreground of your shell.
 After this, you should start seeing connections in your AOC map
+
+You can optionally stop mysql traffic from one of the web apps if you run the `run-web.sh` script with the `STOP_MYSQL=yes` variable.
