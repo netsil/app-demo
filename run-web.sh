@@ -11,12 +11,7 @@ mysql -h $DB_HOST -u $DB_USER -p${DB_PASS} < insert-data.sql
 while true
 do
     # Make requests to the mobile app
-    locust --host http://${APP_FE_HOST}:${APP_FE_PORT} \
-           -f ./locustfile.py \
-           --clients 5 \
-           --hatch-rate 5 \
-           --num-request 100 \
-           --no-web
+    python make-requests.py
 
     # Make requests to the db
     if [ "${STOP_MYSQL}" = "yes" ] ; then
