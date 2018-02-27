@@ -71,7 +71,7 @@ and run the following commands
 
 ```
 create database appdb;
-grant all on appdb.* to '<your-user>' identified by '<your-password>';
+grant all on appdb.* to '<your-user>'@'%' identified by '<your-password>';
 ```
 
 # Web App
