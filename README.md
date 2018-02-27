@@ -42,7 +42,7 @@ Kubernetes will proxy the front-end service
 ## Run the collectors
 As a root user, run the script below, making sure to fill in your AOC host and organization ID:
 ```
-NETSIL_AOC_HOST=<Your-aoc-host> NETSIL_ORGANIZATION_ID=<Your-org-id> ./manifests/collector-db.sh
+NETSIL_SP_HOST=<Your-aoc-host> NETSIL_ORGANIZATION_ID=<Your-org-id> ./manifests/collector-db.sh
 ```
 
 ## Setup the db
