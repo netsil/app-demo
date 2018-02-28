@@ -169,7 +169,7 @@ Now, you can run the apache webserver with the following command
 ```
 ./run-webservers.sh apache
 ```
-This will run a docker container in the background with container name `apache_app`
+This will run a docker container in the background with container name `apache-app`
 
 
 Next, before running the haproxy webserver, you must first give it the host and port (8081 by default) of the apache server itself. You can also specify a port for haproxy to listen on (8082 by default), though in this current setup, no applications talk to haproxy:
@@ -183,4 +183,4 @@ Now, you can run the haproxy webserver with the following command
 ```
 ./run-webservers.sh haproxy
 ```
-This will run a docker container in the background with container name `haproxy_app`
+This will run a docker container in the background with container name `haproxy-app`
