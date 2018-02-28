@@ -117,10 +117,12 @@ You can optionally stop mysql traffic from one of the web apps if you run the `r
 We also provide two webserver containers which talk to each other and the web app
 
 ## Prerequisites
-- A VM with Docker installed
+- Docker is installed on the VM(s) where you're running the webservers 
 - Make sure that communication between the webservers are allowed through the firewall
 
-You may use the provided `./install-docker-centos.sh` script to install docker. This script has been tested on Centos 7.
+You may use the provided `./install-docker-centos.sh` script to install docker. 
+
+This script has been tested on Centos 7.
 
 ## Architecture
 A container running haproxy will make requests to another container running apache.
@@ -128,7 +130,7 @@ A container running haproxy will make requests to another container running apac
 The apache container will then make requests to the vm running the web app.
 
 ## Setup the collectors
-If you are running the webserver containers on their own vms, and not reusing the ones for the web app or db, you will want to install the collectors on those vms. If you are simply reusing the 
+If you are running the webserver containers on their own vms, and not reusing the ones for the web app or db, you will want to install the collectors on those vms.
 
 To do so, run the script below as a root user, making sure to fill in your AOC host and organization ID:
 ```
@@ -136,7 +138,9 @@ NETSIL_SP_HOST=<Your-aoc-host> NETSIL_ORGANIZATION_ID=<Your-org-id> NETSIL_COLLE
 ```
 
 ## Setup the webservers
-Run the script below to build the docker containers:
+Run the script below to build the containers for the webservers. 
+
+This script should be run on the vms where you're running the webservers:
 ```
 ./setup-webservers.sh
 ```
