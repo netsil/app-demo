@@ -7,12 +7,12 @@ if [ "$webserver" = "apache" ] ; then
         echo "Error! You must specify WEB_APP_HOST"
         exit 1
     fi
-    docker run -td \
-        --name apache-app \
-        -e WEB_APP_HOST=${WEB_APP_HOST} \
-        -e WEB_APP_SERVER_PORT=${WEB_APP_SERVER_PORT} \
-        -p ${APACHE_PORT}:80 \
-        netsil/apache-app
+    sudo docker run -td \
+            --name apache-app \
+            -e WEB_APP_HOST=${WEB_APP_HOST} \
+            -e WEB_APP_SERVER_PORT=${WEB_APP_SERVER_PORT} \
+            -p ${APACHE_PORT}:80 \
+            netsil/apache-app
      
 elif [ "$webserver" = "haproxy" ] ; then
     HAPROXY_PORT=${HAPROXY_PORT:-8082}
@@ -21,12 +21,12 @@ elif [ "$webserver" = "haproxy" ] ; then
         echo "Error! You must specify APACHE_HOST"
         exit 1
     fi
-    docker run -td \
-        --name haproxy-app \
-        -e APACHE_HOST=${APACHE_HOST} \
-        -e APACHE_PORT=${APACHE_PORT} \
-        -p ${HAPROXY_PORT}:80 \
-        netsil/haproxy-app
+    sudo docker run -td \
+            --name haproxy-app \
+            -e APACHE_HOST=${APACHE_HOST} \
+            -e APACHE_PORT=${APACHE_PORT} \
+            -p ${HAPROXY_PORT}:80 \
+            netsil/haproxy-app
 elif [ "$webserver" = "web-app" ] ; then
     export WEB_APP_SERVER_PORT=${WEB_APP_SERVER_PORT:-8080}
     python simple-http-server.py

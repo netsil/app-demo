@@ -14,6 +14,7 @@ else
                 -e DEPLOY_ENV="docker" \
                 -e SD_BACKEND="docker" \
                 -e SAMPLINGRATE="100" \
+                -e TAGS="apptype:mobile,apptier:webservers" \
                 -e NETSIL_SP_HOST=${NETSIL_SP_HOST} \
                 -e NETSIL_ORGANIZATION_ID=${NETSIL_ORGANIZATION_ID} \
                 netsil/collectors:stable-${NETSIL_COLLECTORS_VERSION}

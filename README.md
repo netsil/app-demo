@@ -188,3 +188,7 @@ Now, you can run the haproxy webserver with the following command
 ./run-webservers.sh haproxy
 ```
 This will run a docker container in the background with container name `haproxy-app`
+
+## Tips
+* If you run `docker logs -f haproxy-app`, this will print the logs of the haproxy app container, and you should be able to see success logs from its requests to the apache app
+* Similarly, the output of the web-app python webserver should have success logs from requests made by the apache app
