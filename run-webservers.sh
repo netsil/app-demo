@@ -15,7 +15,7 @@ if [ "$webserver" = "apache" ] ; then
         netsil/apache-app
      
 elif [ "$webserver" = "haproxy" ] ; then
-    HAPROXY_PORT=${APACHE_PORT:-8082}
+    HAPROXY_PORT=${HAPROXY_PORT:-8082}
     APACHE_PORT=${APACHE_PORT:-8081}
     if [ -z "${APACHE_HOST}" ] ; then
         echo "Error! You must specify APACHE_HOST"

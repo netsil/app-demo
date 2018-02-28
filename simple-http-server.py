@@ -2,6 +2,7 @@
 # Based from https://www.acmesystems.it/python_http
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 import json
+import os
 
 WEB_APP_SERVER_PORT = os.environ.get(WEB_APP_SERVER_PORT, '8080')
 
