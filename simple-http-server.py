@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # Based from https://www.acmesystems.it/python_http
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
-from os import curdir, sep
+import json
 
-PORT_NUMBER = 8080
+PORT_NUMBER = os.environ.get(WEB_APP_SERVER_PORT, '8080')
 
 #This class will handles any incoming request from
 #the browser 
@@ -11,40 +11,28 @@ class myHandler(BaseHTTPRequestHandler):
 	
 	#Handler for the GET requests
 	def do_GET(self):
-		if self.path=="/":
-			self.path="/index_example2.html"
-
 		try:
-			#Check the file extension required and
-			#set the right mime type
-
 			sendReply = False
-			if self.path.endswith(".html"):
-				mimetype='text/html'
+			if self.path.endswith("/"):
 				sendReply = True
-			if self.path.endswith(".jpg"):
-				mimetype='image/jpg'
+			if self.path.endswith("/mobile"):
 				sendReply = True
-			if self.path.endswith(".gif"):
-				mimetype='image/gif'
+			if self.path.endswith("/desktop"):
 				sendReply = True
-			if self.path.endswith(".js"):
-				mimetype='application/javascript'
+			if self.path.endswith("/laptop"):
 				sendReply = True
-			if self.path.endswith(".css"):
-				mimetype='text/css'
+			if self.path.endswith("netbook"):
 				sendReply = True
 
 			if sendReply == True:
+				mimetype='application/json'
+                                json_string = json.dumps({'path': self.path})
 				#Open the static file requested and send it
-				f = open(curdir + sep + self.path) 
 				self.send_response(200)
 				self.send_header('Content-type',mimetype)
 				self.end_headers()
-				self.wfile.write(f.read())
-				f.close()
+                                self.wfile.write(json_string)
 			return
-
 
 		except IOError:
 			self.send_error(404,'File Not Found: %s' % self.path)
