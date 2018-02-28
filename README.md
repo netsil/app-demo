@@ -112,3 +112,61 @@ This will run the web app in the foreground of your shell.
 After this, you should start seeing connections in your AOC map
 
 You can optionally stop mysql traffic from one of the web apps if you run the `run-web.sh` script with the `STOP_MYSQL=yes` variable.
+
+# Web-servers 
+We also provide two webserver containers which talk to each other and the web app
+
+## Prerequisites
+- A VM with Docker installed
+
+You may use the provided `./install-docker-centos.sh` script to install docker. This script has been tested on Centos 7.
+
+## Architecture
+A container running haproxy will make requests to another container running apache.
+
+The apache container will then make requests to the vm running the web app.
+
+## Setup the collectors
+If you are running the webserver containers on their own vms, and not reusing the ones for the web app or db, you will want to install the collectors on those vms. If you are simply reusing the 
+
+To do so, run the script below as a root user, making sure to fill in your AOC host and organization ID:
+```
+NETSIL_SP_HOST=<Your-aoc-host> NETSIL_ORGANIZATION_ID=<Your-org-id> ./manifests/collector-webservers.sh
+```
+
+## Setup the webservers
+Run the script below to build the docker containers:
+```
+./setup-webservers.sh
+```
+
+## Run a webserver on the web app vm
+Since we have to make requests from the apache container to the web app, we must have a server running on the web app vm
+A basic python HTTP server is provided for this purpose. The following command will start the python http server in the foreground:
+```
+./run-python-http-server.sh
+``` 
+
+## Run the webservers
+Before running the apache webserver, you must first give it the location of the web app vm:
+```
+export WEB_APP_HOST=<internal-address-of-web-app-vm> 
+```
+
+Now, you can run the apache webserver with the following command
+```
+./run-webservers.sh apache
+```
+This will run a docker container in the background with container name `apache_app`
+
+
+Next, before running the haproxy webserver, you must first give it the location of the apache container 
+```
+export APACHE_HOST=<address-of-vm-where-apache-container-is-running> 
+```
+
+Now, you can run the haproxy webserver with the following command
+```
+./run-webservers.sh haproxy
+```
+This will run a docker container in the background with container name `haproxy_app`
