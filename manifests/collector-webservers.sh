@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ -z "${NETSIL_SP_HOST}" ] || [ -z "${NETSIL_ORGANIZATION_ID}" ] || [ -z "${NETSIL_COLLECTORS_VERSION}" ]; then
-    echo "Error! Did not specify NETSIL_SP_HOST or NETSIL_ORGANIZATION_ID"
+    echo "Error! Did not specify NETSIL_SP_HOST, NETSIL_ORGANIZATION_ID, or NETSIL_COLLECTORS_VERSION"
 else
     sudo docker run -td \
                 --name=netsil_collectors \

@@ -129,8 +129,10 @@ A container running haproxy will make requests to another container running apac
 
 The apache container will then make requests to the vm running the web app.
 
+For a more visually pleasing topology, you may wish to run the haproxy and apache containers on different vms so there are more hosts.
+
 ## Setup the collectors
-If you are running the webserver containers on their own vms, and not reusing the ones for the web app or db, you will want to install the collectors on those vms.
+If you are running the webserver containers on their own vms, and not reusing the ones for the web app or db, you will want to install collectors on those vms.
 
 To do so, run the script below as a root user, making sure to fill in your AOC host and organization ID:
 ```
@@ -168,15 +170,13 @@ export WEB_APP_HOST=<internal-address-of-web-app-vm>  \
 export WEB_APP_SERVER_PORT=<port-number> \
 export APACHE_PORT=<port-number>
 ```
-
 Now, you can run the apache webserver with the following command
 ```
 ./run-webservers.sh apache
 ```
 This will run a docker container in the background with container name `apache-app`
 
-
-Next, before running the haproxy webserver, you must first give it the host and port (8081 by default) of the apache server itself. You can also specify a port for haproxy to listen on (8082 by default), though in this current setup, no applications talk to haproxy:
+Next, before running the haproxy webserver, you must first give it the host and port (8081 by default) of the apache server. You can also specify a port for haproxy to listen on (8082 by default), though in this current setup, no applications talk to haproxy:
 ```
 export APACHE_HOST=<address-of-vm-where-apache-container-is-running> \
 export APACHE_PORT=<port-number> \
