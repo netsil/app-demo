@@ -3,7 +3,7 @@
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 import json
 
-PORT_NUMBER = os.environ.get(WEB_APP_SERVER_PORT, '8080')
+WEB_APP_SERVER_PORT = os.environ.get(WEB_APP_SERVER_PORT, '8080')
 
 #This class will handles any incoming request from
 #the browser 
@@ -40,8 +40,8 @@ class myHandler(BaseHTTPRequestHandler):
 try:
 	#Create a web server and define the handler to manage the
 	#incoming request
-	server = HTTPServer(('', PORT_NUMBER), myHandler)
-	print 'Started httpserver on port ' , PORT_NUMBER
+	server = HTTPServer(('', WEB_APP_SERVER_PORT), myHandler)
+	print 'Started httpserver on port ' , WEB_APP_SERVER_PORT
 	
 	#Wait forever for incoming htto requests
 	server.serve_forever()

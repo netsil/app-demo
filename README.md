@@ -118,6 +118,7 @@ We also provide two webserver containers which talk to each other and the web ap
 
 ## Prerequisites
 - A VM with Docker installed
+- Make sure that communication between the webservers are allowed through the firewall
 
 You may use the provided `./install-docker-centos.sh` script to install docker. This script has been tested on Centos 7.
 
@@ -141,16 +142,27 @@ Run the script below to build the docker containers:
 ```
 
 ## Run a webserver on the web app vm
-Since we have to make requests from the apache container to the web app, we must have a server running on the web app vm
-A basic python HTTP server is provided for this purpose. The following command will start the python http server in the foreground:
+Since we have to make requests from the apache container to the web app, we must have a server running on the web app vm.
+
+A basic python HTTP server is provided for this purpose. 
+
+Before running the python webserver, you may specify a port number that it will listen on
+(This port number is 8080 by default):
+
 ```
-./run-python-http-server.sh
+export WEB_APP_SERVER_PORT=<port-number>
+```
+The following command will start the python http server in the foreground:
+```
+./run-webservers.sh web-app
 ``` 
 
 ## Run the webservers
-Before running the apache webserver, you must first give it the location of the web app vm:
+Before running the apache webserver, you must first give it the location of the web app vm and the port number of the web app server (8080 by default) and the port number of the apache server itself (8081 by default):
 ```
-export WEB_APP_HOST=<internal-address-of-web-app-vm> 
+export WEB_APP_HOST=<internal-address-of-web-app-vm>  \
+export WEB_APP_SERVER_PORT=<port-number> \
+export APACHE_PORT=<port-number>
 ```
 
 Now, you can run the apache webserver with the following command
@@ -160,9 +172,11 @@ Now, you can run the apache webserver with the following command
 This will run a docker container in the background with container name `apache_app`
 
 
-Next, before running the haproxy webserver, you must first give it the location of the apache container 
+Next, before running the haproxy webserver, you must first give it the host and port (8081 by default) of the apache server itself. You can also specify a port for haproxy to listen on (8082 by default), though in this current setup, no applications talk to haproxy:
 ```
-export APACHE_HOST=<address-of-vm-where-apache-container-is-running> 
+export APACHE_HOST=<address-of-vm-where-apache-container-is-running> \
+export APACHE_PORT=<port-number> \
+export HAPROXY_PORT=<port-number>
 ```
 
 Now, you can run the haproxy webserver with the following command
